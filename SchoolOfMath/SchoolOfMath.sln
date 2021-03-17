@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3EAD8C64-5F73-44B6-BB81-EC03C4267E14}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
+		tye.yaml = tye.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Einstein", "Einstein\Einstein.csproj", "{73750023-AAEC-4660-8349-8DFBFF7F390F}"
@@ -14,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evelyne", "Evelyne\Evelyne.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bruce", "Bruce\Bruce.csproj", "{E22488AD-1864-46B1-9BD3-D6C480545067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Madeleine", "Madeleine\Madeleine.csproj", "{C94056D2-EC95-45A4-81EE-846376F175F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Madeleine", "Madeleine\Madeleine.csproj", "{C94056D2-EC95-45A4-81EE-846376F175F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

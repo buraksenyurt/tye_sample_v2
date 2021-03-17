@@ -1,0 +1,16 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: schoolofmath
+services:
+- name: einstein
+  project: Einstein/Einstein.csproj
+- name: evelyne
+  project: Evelyne/Evelyne.csproj
+- name: bruce
+  project: Bruce/Bruce.csproj
+- name: madeleine
+  project: Madeleine/Madeleine.csproj
