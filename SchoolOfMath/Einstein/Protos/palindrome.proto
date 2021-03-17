@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "SchoolOfRock";
+
+package palindrome;
+
+service PalindromeFinder {
+  rpc IsItPalindrome (PalindromeRequest) returns (PalindromeReply);
+}
+
+message PalindromeRequest {
+  int64 number= 1;
+}
+
+message PalindromeReply {
+  bool isPalindrome= 1;
+}
