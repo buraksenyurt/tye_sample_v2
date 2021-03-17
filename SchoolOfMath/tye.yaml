@@ -1,4 +1,4 @@
-# tye application configuration file
+﻿# tye application configuration file
 # read all about it at https://github.com/dotnet/tye
 #
 # when you've given us a try, we'd love to know what you think:
@@ -14,3 +14,11 @@ services:
   project: Bruce/Bruce.csproj
 - name: madeleine
   project: Madeleine/Madeleine.csproj
+- name: redis
+  image: redis
+  bindings:
+  - port: 6379
+    connectionString: "${host}:${port}"
+- name: redis-cli #redis cache tarafında ne olduğunu izlemek için ekledik. Ancak mecburi değil. Opsiyonel.
+  image: redis
+  args: "redis-cli -h redis MONITOR"
