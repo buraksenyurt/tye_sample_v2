@@ -4,11 +4,13 @@ Bu seferki Tye senaryosunda aşağıdaki senaryoyu icra edeceğiz. [Kaynak](http
 
 ![Project_Tye_Senaryo.png](./assets/Project_Tye_Senaryo.png)
 
-Einstein, gRPC tabanlı bir servis sağlayıcı. İçinde Palindrom sayıları hesap eden bir fonksiyon desteği sunuyor. Servis cache stratejisi için Redis'i kullanacak. Ayrıca bir mesaj kuyruğu sistemini de destekleyecek ki bu noktada RabbitMQ'dan yararlanacağız.
+- Einstein, gRPC tabanlı bir servis sağlayıcı. İçinde Palindrom sayıları hesap eden bir fonksiyon desteği sunuyor. Servis cache stratejisi için Redis'i kullanacak. 
+Cache'te ne mi tutacağız? Daha önceden Palindrome olarak işaretleniş bir sayı varsa bunu kendi adıyla Cache'e alacağız ve 1 saat boyunca orada tutacağız. Aynı sayı tekrar istenirse hesaplanmadan doğrudan cache'den gelecek. Sırf Redis'i senaryoya katalım diye...
+Ayrıca bir mesaj kuyruğu sistemini de destekleyecek ki bu noktada RabbitMQ'dan yararlanacağız.
 
-Evelyne, Bruce ve Madeleine Worker tipinden istemci servisler. _(Onları, başladıktan sonra sürekli talep gönderen servisler olarak düşünelim)_ Belli bir sayıdan başlayarak Eintesein'a talep gönderiyorlar ve gönderikleri sayının Palindrom olup olmadığı bilgisini alıyorlar.
+- Evelyne, Bruce ve Madeleine Worker tipinden istemci servisler. _(Onları, başladıktan sonra sürekli talep gönderen servisler olarak düşünelim)_ Belli bir sayıdan başlayarak Eintesein'a talep gönderiyorlar ve gönderikleri sayının Palindrom olup olmadığı bilgisini alıyorlar.
 
-Robert ise RabbitMQ kuyruğunu dinleyen diğer bir Worker servisimiz.
+- Robert ise RabbitMQ kuyruğunu dinleyen diğer bir Worker servisimiz.
 
 Amacımız bu senaryoyu Tye destekli olarak inşa edip kolay bir şekilde Kubernetes'e alabilmek. Daha ilkel bir sürüm için [StarCups isimli örneğe](https://github.com/buraksenyurt/tye_sample) de bakabilirsiniz.
 
@@ -81,6 +83,24 @@ tye run
 ![screenshot_3.png](./assets/screenshot_3.png)
 
 ## Redis Desteğinin Eklenmesi
+
+Hem redis hem rabbitmq hizmetlerinin ilave edilmesi hem de kubernetes geçiş hazırlıkları için tye.yaml dosyasını oluşturmalıyız.
+
+```bash
+tye init
+
+# tye.yaml dosyasın redis için gerekli ekleri yaptıktan sonra
+# einstein (gRPC API servisimiz) cache desteği için gerekli nuget paketleri eklenir
+cd einstein
+dotnet add package Microsoft.Extensions.Configuration
+dotnet add package Microsoft.Extensions.Caching.StackExchangeRedis
+```
+
+Şu noktada tye run ile çalıştırdığımızda en azından aşığıdaki gibi Redis kullanıldığını görmek lazım.
+
+![screenshot_4.png](./assets/screenshot_4.png)
+
+![screenshot_5.png](./assets/screenshot_5.png)
 
 ## RabbitMQ Hizmetinin Eklenmesi
 
