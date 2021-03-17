@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>dotnet-Bruce-1A47EE64-0998-48B8-B65A-D51134AF41D0</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.15.6" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.36.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.36.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.36.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Tye.Extensions.Configuration" Version="0.6.0-alpha.21070.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Einstein\Protos\palindrome.proto" GrpcServices="Client">
+      <Link>Protos\palindrome.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+</Project>
