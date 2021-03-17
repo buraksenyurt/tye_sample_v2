@@ -104,4 +104,12 @@ dotnet add package Microsoft.Extensions.Caching.StackExchangeRedis
 
 ## RabbitMQ Hizmetinin Eklenmesi
 
+_EKLENECEK_
+
 ## AMQP İstemcisinin Eklenmesi (Robert)
+
+_EKLENECEK_
+
+## Kubernetes Hazırlıkları
+
+_EKLENECEK_
