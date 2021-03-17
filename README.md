@@ -6,7 +6,7 @@ Bu seferki Tye senaryosunda aşağıdaki senaryoyu icra edeceğiz. [Kaynak](http
 
 Einstein, gRPC tabanlı bir servis sağlayıcı. İçinde Palindrom sayıları hesap eden bir fonksiyon desteği sunuyor. Servis cache stratejisi için Redis'i kullanacak. Ayrıca bir mesaj kuyruğu sistemini de destekleyecek ki bu noktada RabbitMQ'dan yararlanacağız.
 
-Evelyne, Bruce ve Madeleine Worker tipinden istemci servisler. Belli bir sayıdan başlayarak Eintesein'a talep gönderiyorlar ve gönderikleri sayının Palindrom olup olmadığı bilgisini alıyorlar.
+Evelyne, Bruce ve Madeleine Worker tipinden istemci servisler. _(Onları, başladıktan sonra sürekli talep gönderen servisler olarak düşünelim)_ Belli bir sayıdan başlayarak Eintesein'a talep gönderiyorlar ve gönderikleri sayının Palindrom olup olmadığı bilgisini alıyorlar.
 
 Robert ise RabbitMQ kuyruğunu dinleyen diğer bir Worker servisimiz.
 
@@ -28,7 +28,60 @@ dotnet new sln
 dotnet new grpc -n Einstein
 dotnet sln add Einstein
 
-# Protos klasöründeki greet.proto düzenlenir
+# Protos klasöründeki greet.proto değiştirilir
+# Akabinde servis sınıfı da
+
+# İlk İstemci tarafı oluşturulur
+dotnet new worker -n Evelyne
+dotnet sln add Evelyne
+# Evelyne'nin gRPC servisini kullanabilmesi için gerekli Nuget paketleri eklenir.
+cd Evelyne
+dotnet add package Grpc.Net.Client
+dotnet add package Grpc.Net.ClientFactory
+dotnet add package Google.Protobuf
+dotnet add package Grpc.Tools
+# Ayrıca Tye konfigurasyonu için gerekli extension paketi de yüklenir
+dotnet add package --prerelease Microsoft.Tye.Extensions.Configuration
+cd ..
+
+# Visual Studio 2019 kullanıyorsak Add new gRPC Service Reference(Connected Services kısmından) ile Einstein'daki proto dosyasının fiziki adresi gösterilerek gerekli proxy tipinin üretilmesi kolayca sağlanabilir.
+
+# İkinci Worker servisi ekliyoruz (Bruce)
+# Tek fark 1den değil de 10000den başlamasıdır (Burada da Add new gRPC servis yapmayı unutmayalım)
+dotnet new worker -n Bruce
+dotnet sln add Bruce
+cd Bruce
+dotnet add package Grpc.Net.Client
+dotnet add package Grpc.Net.ClientFactory
+dotnet add package Google.Protobuf
+dotnet add package Grpc.Tools
+dotnet add package --prerelease Microsoft.Tye.Extensions.Configuration
+cd ..
+
+# Üçüncü Worker servis Madeleine de benzer şekilde eklenir
+dotnet new worker -n Madeleine
+dotnet sln add Madeleine
+cd Madeleine
+dotnet add package Grpc.Net.Client
+dotnet add package Grpc.Net.ClientFactory
+dotnet add package Google.Protobuf
+dotnet add package Grpc.Tools
+dotnet add package --prerelease Microsoft.Tye.Extensions.Configuration
+cd ..
+
+# Yukradaki işlemler tamamlandıktan sonra en azından aşağıdaki terminal komutu ile 
+# servisleri ayağa kaldırıp loglara bakmakta yarar var
+tye run
 ```
 
-## 
+![screenshot_1.png](./assets/screenshot_1.png)
+
+![screenshot_2.png](./assets/screenshot_2.png)
+
+![screenshot_3.png](./assets/screenshot_3.png)
+
+## Redis Desteğinin Eklenmesi
+
+## RabbitMQ Hizmetinin Eklenmesi
+
+## AMQP İstemcisinin Eklenmesi (Robert)
