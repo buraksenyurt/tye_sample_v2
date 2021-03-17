@@ -27,6 +27,8 @@ dotnet new sln
 # Einstein isimli gRPC servisinin geliştirilmesi
 dotnet new grpc -n Einstein
 dotnet sln add Einstein
+
+# Protos klasöründeki greet.proto düzenlenir
 ```
 
 ## 

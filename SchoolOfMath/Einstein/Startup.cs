@@ -31,7 +31,7 @@ namespace Einstein
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<PalindromeFinderService>();
 
                 endpoints.MapGet("/", async context =>
                 {
