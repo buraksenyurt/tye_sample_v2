@@ -22,3 +22,12 @@ services:
 - name: redis-cli #redis cache tarafında ne olduğunu izlemek için ekledik. Ancak mecburi değil. Opsiyonel.
   image: redis
   args: "redis-cli -h redis MONITOR"
+- name: rabbitmq # RabbitMQ servisini MUI arabirimi ile birlikte ekliyoruz.
+# Mui arabirimine aşağıdaki kriterlere göre localhost:15672'den quest/quest log in bilgisi ile erişebiliriz
+  image: rabbitmq:3-management
+  bindings:
+  - name: mq_binding
+    port: 5672
+    protocol: rabbitmq
+  - name: mui_binding
+    port: 15672
