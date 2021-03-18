@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using Einstein.Rabbit;
+using Grpc.Core;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using SchoolOfRock;
@@ -14,10 +15,14 @@ namespace Einstein
         private readonly IDistributedCache _cache;
         private readonly PalindromeReply True = new() { IsPalindrome = true };
         private readonly PalindromeReply False = new() { IsPalindrome = false };
-        public PalindromeFinderService(ILogger<PalindromeFinderService> logger, IDistributedCache cache)
+        private readonly IMessageQueueSender _mqSender;
+        private readonly string _queueName;
+        public PalindromeFinderService(ILogger<PalindromeFinderService> logger, IDistributedCache cache, IMessageQueueSender mqSender)
         {
             _logger = logger;
             _cache = cache; //Dağıtık cache servisi olarak Redis konumlanacak. Startup'ta onu ekledik çünkü.
+            _mqSender = mqSender; // MQ nesnesini alıyoruz
+            _queueName = Constants.GetRabbitMQQueueName(); //MQ adını alıyoruz.
         }
 
         public override async Task<PalindromeReply> IsItPalindrome(PalindromeRequest request, ServerCallContext context)
@@ -26,7 +31,7 @@ namespace Einstein
             var number = request.Number;
 
             var inCache = await _cache.GetStringAsync(request.Number.ToString()); // bu sayı Redis Cache'te var mı?
-            if (inCache=="YES")
+            if (inCache == "YES")
             {
                 _logger.LogInformation($"{request.Number} palindrom bir sayıdır ve şu an Redis'ten getiriyorum. Hesap etmeye gerek yok");
                 return True;
@@ -46,6 +51,9 @@ namespace Einstein
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
                 });
                 // Palindrome sayı ise onu Redis Cache'e atıyoruz.
+
+                // Ayrıca RabbitMQ kuyruğuna da sayıyı atıyoruz.
+                _mqSender.Send(_queueName, request.Number.ToString());
                 return True;
             }
             else

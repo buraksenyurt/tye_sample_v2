@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Einstein.Rabbit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +18,8 @@ namespace Einstein
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            // RabbitMQ Desteği eklendi
+            services.AddRabbitMQ();
 
             // Redis bildirimini yaptık. PalindromeFinderService, consturctor'dan alacak.
             services.AddStackExchangeRedisCache(o =>
