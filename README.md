@@ -94,6 +94,7 @@ tye init
 cd einstein
 dotnet add package Microsoft.Extensions.Configuration
 dotnet add package Microsoft.Extensions.Caching.StackExchangeRedis
+cd ..
 ```
 
 Şu noktada tye run ile çalıştırdığımızda en azından aşığıdaki gibi Redis kullanıldığını görmek lazım.
@@ -104,7 +105,22 @@ dotnet add package Microsoft.Extensions.Caching.StackExchangeRedis
 
 ## RabbitMQ Hizmetinin Eklenmesi
 
-_EKLENECEK_
+Palindrome sayılar buldukça bunları RabbitMQ'ya mesaj olarak yollayacak bir düzenek ekleyeceğiz. RabbitMQ'da, Redis gibi çalışma zamanında ayakta olması beklenen bir servis. Bu nedenle tye.yaml dosyasında gerekli eklemeler yapılmalı.
+
+Sonrasında Einstein isimli servis uygulamasına rabbitmq paketini ekliyoruz.
+
+```bash
+cd Einstein
+dotnet add package RabbitMQ.Client
+cd ..
+```
+
+Kod tarafında RabbitMQ kullanımı için gerekli tipler, GoldenHammer isimli sınıfta yer alıyor. [Kaynak](https://github.com/PacktPublishing/Adopting-.NET-5--Architecture-Migration-Best-Practices-and-New-Features/tree/master/Chapter04/microservicesapp) 
+_(God Object tadındaki bir sınıf ama senaryoda kullanmak basit olduğundan işime geldi. Daha iyi bir şekilde düzenlemek lazım)_
+
+Bu noktada yine tye run diye ilerleyip http://localhost:15672 adresine ulaşarak RabbitMQ tarafının işler olduğunu görmekte yarar var.
+
+![screenshot_6.png](./assets/screenshot_6.png)
 
 ## AMQP İstemcisinin Eklenmesi (Robert)
 
