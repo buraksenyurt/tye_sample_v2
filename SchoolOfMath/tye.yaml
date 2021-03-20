@@ -7,25 +7,41 @@
 name: schoolofmath
 services:
 - name: einstein
+  tags:
+    - backend
   project: Einstein/Einstein.csproj
 - name: evelyne
+  tags:
+    - client
   project: Evelyne/Evelyne.csproj
 - name: bruce
+  tags:
+    - client
   project: Bruce/Bruce.csproj
 - name: madeleine
+  tags:
+    - client
   project: Madeleine/Madeleine.csproj
 - name: robert
+  tags:
+    - middleware
   project: Robert/Robert.csproj
 - name: redis
+  tags:
+    - backend
   image: redis
   bindings:
   - port: 6379
     connectionString: "${host}:${port}"
 - name: redis-cli #redis cache tarafında ne olduğunu izlemek için ekledik. Ancak mecburi değil. Opsiyonel.
+  tags:
+    - backend
   image: redis
   args: "redis-cli -h redis MONITOR"
 - name: rabbitmq # RabbitMQ servisini MUI arabirimi ile birlikte ekliyoruz.
 # Mui arabirimine aşağıdaki kriterlere göre localhost:15672'den quest/quest log in bilgisi ile erişebiliriz
+  tags:
+    - middleware
   image: rabbitmq:3-management
   bindings:
   - name: mq_binding
