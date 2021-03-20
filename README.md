@@ -124,7 +124,61 @@ Bu noktada yine tye run diye ilerleyip http://localhost:15672 adresine ulaşarak
 
 ## AMQP İstemcisinin Eklenmesi (Robert)
 
-_EKLENECEK_
+Robert isimli Worker tipinden olan son istemci uygulama, RabbitMQ'ya atılan palindrome sayıları içeren mesajları yakalamakla görevli. RabbitMQ dinleyicisi olduğunu söyleyebiliriz. Einstein isimli servis Palindrome sayısı hesapladıkça RabbitMQ'ya bunu mesaj olarak yolluyordu. Consumer'dan bunları yakalamayı bekliyoruz.
+
+```bash
+dotnet new worker -n Robert
+dotnet sln add Robert
+cd Robert
+# RabbitMQ istemcisi olacağı için eklenecek paket
+dotnet add package RabbitMQ.Client
+# ve pek tabii Tye özelliklerini kullanabilmesi için de gerekli konfigurasyon paketi
+dotnet add package --prerelease Microsoft.Tye.Extensions.Configuration
+```
+
+Robert kodları tamamlandıktan sonra _tye run_ ile sistemi çalıştırıp dashboard üzerinden ulaşabileceğimiz logları kontrol etmekte yarar var. Bakalım Robert loglarında RabbitMQ daki _palindromes_ isimli kuyruğa düşüen mesajlar var mı?
+
+![screenshot_7.png](./assets/screenshot_7.png)
+
+### Sadece Belli Uygulamaları Çalıştırmak
+
+tye.yaml dosyasında tag bildirimlerini kullanarak _tye run_ sonrası sadece belli servislerin ayağa kaldırılması sağlanabilir. Debug işlemleri için idealdir. N tane servisin olduğu senaryolarda her şeyi ayağa kaldırmak yerine gerekenleri kurcalama noktasında çok faydalıdır.
+
+```bash
+tye run --tags middleware #sadece middleware tag'ine sahip servisleri çalıştırır.
+```
+
+![screenshot_8.png](./assets/screenshot_8.png)
+
+```bash
+# Mesela aşağıdaki kullanım ile backend ve middleware tag'ine sahip servisler ayağa kaldırılır
+tye run --tags backend middleware
+```
+
+## Debug Etmek ve Breakpoint Noktalarına Geçmek
+
+tye ile çalışırken ayağa kaldırılan uygulamaları debug etmek için _şimdilik_ biraz daha meşakkatli bir yol izlemek gerekiyor.
+
+İlk olarak gerekli yerlere breakpoint konulur. Örneğin;
+
+![screenshot_9.png](./assets/screenshot_9.png)
+
+```bash
+# Aşağıdaki komut ile sistem çalıştırlır
+tye run --debug
+```
+
+Terminalde loglarına düşen process id bulunur.
+
+![screenshot_10.png](./assets/screenshot_10.png)
+
+__Visual Studio -> Debug -> Attach to Process__ adımları kullanılarak ilgili process çalışma zamanına alınır.
+
+![screenshot_11.png](./assets/screenshot_11.png)
+
+__Breakpoint__ noktasına gelinmesi beklenir.
+
+![screenshot_12.png](./assets/screenshot_12.png)
 
 ## Kubernetes Hazırlıkları
 
