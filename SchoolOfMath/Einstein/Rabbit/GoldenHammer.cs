@@ -31,10 +31,10 @@ namespace Einstein.Rabbit
 
         public static string GetRabbitMQHostName()
         {
-            var v = Environment.GetEnvironmentVariable(Constants.RABBIT_HOST);
+            var v = Environment.GetEnvironmentVariable(RABBIT_HOST);
             if (string.IsNullOrWhiteSpace(v))
             {
-                v = Environment.GetEnvironmentVariable(Constants.RABBIT_ALT_HOST);
+                v = Environment.GetEnvironmentVariable(RABBIT_ALT_HOST);
                 if (string.IsNullOrWhiteSpace(v))
                     return "rabbitmq";
                 else return v;
@@ -44,12 +44,12 @@ namespace Einstein.Rabbit
 
         public static string GetRabbitMQPort()
         {
-            var v = Environment.GetEnvironmentVariable(Constants.RABBIT_PORT);
+            var v = Environment.GetEnvironmentVariable(RABBIT_PORT);
             if (string.IsNullOrWhiteSpace(v))
             {
-                v = Environment.GetEnvironmentVariable(Constants.RABBIT_ALT_PORT);
+                v = Environment.GetEnvironmentVariable(RABBIT_ALT_PORT);
                 if (string.IsNullOrWhiteSpace(v) || v == "-1")
-                    return Environment.GetEnvironmentVariable(Constants.RABBIT_ALT2_PORT);
+                    return Environment.GetEnvironmentVariable(RABBIT_ALT2_PORT);
                 else return v;
             }
             else return v;
@@ -57,7 +57,7 @@ namespace Einstein.Rabbit
 
         public static string GetRabbitMQUser()
         {
-            var v = Environment.GetEnvironmentVariable(Constants.RABBIT_USER);
+            var v = Environment.GetEnvironmentVariable(RABBIT_USER);
             if (string.IsNullOrWhiteSpace(v))
                 return "guest"; 
             else return v;
@@ -65,7 +65,7 @@ namespace Einstein.Rabbit
 
         public static string GetRabbitMQPassword()
         {
-            var v = Environment.GetEnvironmentVariable(Constants.RABBIT_PSWD);
+            var v = Environment.GetEnvironmentVariable(RABBIT_PSWD);
             if (string.IsNullOrWhiteSpace(v))
                 return "guest";
             else return v;
@@ -73,9 +73,9 @@ namespace Einstein.Rabbit
 
         public static string GetRabbitMQQueueName()
         {
-            var v = Environment.GetEnvironmentVariable(Constants.RABBIT_QUEUE);
+            var v = Environment.GetEnvironmentVariable(RABBIT_QUEUE);
             if (string.IsNullOrWhiteSpace(v))
-                return "primes";
+                return "palindromes"; // Consumer'ın dinyeceği varsayılan kuyruk adı. Normalde RABBIT_QUEUE ile çevre değişken üzerinden gelmezse bu kullanılır.
             else return v;
         }
     }
