@@ -5,7 +5,9 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3EAD8C64-5F73-44B6-BB81-EC03C4267E14}"
 	ProjectSection(SolutionItems) = preProject
+		rabbitmq.yaml = rabbitmq.yaml
 		..\README.md = ..\README.md
+		redis.yaml = redis.yaml
 		tye.yaml = tye.yaml
 	EndProjectSection
 EndProject
@@ -17,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bruce", "Bruce\Bruce.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Madeleine", "Madeleine\Madeleine.csproj", "{C94056D2-EC95-45A4-81EE-846376F175F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robert", "Robert\Robert.csproj", "{5E42F8D3-9771-4AF8-8DCA-D47539BE863D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robert", "Robert\Robert.csproj", "{5E42F8D3-9771-4AF8-8DCA-D47539BE863D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
