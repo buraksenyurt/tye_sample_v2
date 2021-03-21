@@ -180,6 +180,42 @@ __Breakpoint__ noktasına gelinmesi beklenir.
 
 ![screenshot_12.png](./assets/screenshot_12.png)
 
-## Kubernetes Hazırlıkları
+## Kubernetes Deploy İşlemleri
 
-_EKLENECEK_
+Windows 10 üstündeki Docker Desktop'ın K8s Enabled özelliği açık. Buna göre sistemde tye.yaml tarafındaki servislerin alınabileceği bir K8s Cluster mevcut.
+İkinci olarak bir container registry'ye ihtiyaç var.
+
+```bash
+# container registry için aşağıdaki komut kullanılabilir.
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+# Örnek iki harici servis kullanmakta
+# Redis ve RabbitMQ. Bunları şu an için K8s ortamına elle deploy etmeliyiz.
+# Bunun için redis.yaml ve rabbitmq.yaml tanım dosyalarını hazırlayıp,
+# aşağıdaki terminal komutları ile K8s'e deploy ediyoruz.
+
+kubectl apply -f .\rabbitmq.yaml
+kubectl apply -f .\redis.yaml
+```
+
+![screenshot_13.png](./assets/screenshot_13.png)
+
+```bash
+# K8s'e uygulamaları deploy etmek için
+tye deploy --interactive
+
+# redis için adres sorduğunda       ->  redis:6379
+# rabbitmq için adres sorduğunda    ->  rabbitmq:5672 (Mui sebebiyle iki kez sorabilir)
+```
+
+![screenshot_14.png](./assets/screenshot_14.png)
+
+Eğer localhost:30072 adresine gidilirse RabbitMQ tarafındaki hareketlilik de izlenebilir.
+
+![screenshot_15.png](./assets/screenshot_15.png)
+
+Yapılan Deployment işlemini geri almak ve K8s dağıtımlarını kaldırmak içi aşağıdaki terminal komutu kullanılır.
+
+```bash
+tye undeploy
+```
