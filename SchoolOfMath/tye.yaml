@@ -5,11 +5,17 @@
 #    https://aka.ms/AA7q20u
 #
 name: schoolofmath
+registry: localhost:5000 # container registry adresi
 services:
 - name: einstein
   tags:
     - backend
   project: Einstein/Einstein.csproj
+  replicas: 1
+  env: #rabbitmq için kullanıcı adı, şifre ve varsayılan kuyruk adı bildirimi
+  - RABBIT_USER=guest
+  - RABBIT_PSWD=guest
+  - RABBIT_QUEUE=palindromes
 - name: evelyne
   tags:
     - client
@@ -44,8 +50,8 @@ services:
     - middleware
   image: rabbitmq:3-management
   bindings:
-  - name: mq_binding
+  - name: mq-binding # mq_binding veya mui_binding şeklinde kullanınca K8s deploy işleminde kullanılan secret değerlerinde hata alındı. - veya . olarak yazılmalı.
     port: 5672
     protocol: rabbitmq
-  - name: mui_binding
+  - name: mui-binding
     port: 15672
